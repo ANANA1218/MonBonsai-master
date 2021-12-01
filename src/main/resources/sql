@@ -1,0 +1,18 @@
+CREATE TABLE Bonsai(
+
+id PRIMARY KEY,
+nom VARCHAR(100),
+species VARCHAR(100),
+acquisition_date DATE,
+acquisition_age INT,
+last_watering DATE,
+last_repotting DATE,
+last_pruning DATE,
+status VARCHAR(100)
+
+);
+
+INSERT into bonsai(id, name, species, acquisition_date, acquisition_age,last_watering,last_repotting,last_pruning, status) values ('', 'Nana', 'bonsai', '29/11/2020', 1,'30/11/2021','30/11/2021','30/11/2021', 'alive');
+INSERT into bonsai(id, name, species, acquisition_date, acquisition_age,last_watering,last_repotting,last_pruning, status) values ('', 'Mimi', 'bonsai', '29/11/2020', 1,'30/09/2021', '30/09/2021','30/09/2021','dead');
+
+
