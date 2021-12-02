@@ -19,7 +19,7 @@ public class BonsaiMapper {
         return bonsaiConvert;
     }
 
-    public static Bonsai EntityToBonsai (BonsaiEntity bonsaiEntity){
+    public static Bonsai EntityToBonsai(BonsaiEntity bonsaiEntity){
         Bonsai bonsaiConvert = new Bonsai();
         bonsaiConvert.setId(bonsaiEntity.getId());
         bonsaiConvert.setName(bonsaiEntity.getName());

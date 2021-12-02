@@ -1,19 +1,19 @@
 package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository;
 
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Bonsai;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class BonsaiRepository{
 
     private final BonsaiDao bonsaiDao;
-
+    private BonsaiMapper bonsaiMapper;
 
 
     public BonsaiRepository(BonsaiDao bonsaiDao) {
@@ -22,29 +22,27 @@ public class BonsaiRepository{
 
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<BonsaiEntity> findById(@PathVariable("uuid") UUID uuid){
+    public Optional<Bonsai> findById(UUID uuid) {
         return bonsaiDao.findById(uuid)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .map(BonsaiMapper::EntityToBonsai);
     }
 
-    // a modifier
+
     @GetMapping
     public List<Bonsai> findAll() {
-        List<BonsaiEntity> bonsaiEntityList = bonsaiDao.findAll();
-        List<Bonsai> bonsaiList = new ArrayList<>();
-
-        return bonsaiList;
+        return bonsaiDao.findAll().stream()
+                .map(BonsaiMapper::EntityToBonsai)
+                .collect(Collectors.toList());
     }
-    //
 
 
-    //a modifier
+
+
+
+    //a modifier le meme que pour le create
     @PostMapping
-    public Bonsai save(@RequestBody BonsaiEntity bonsai){
-
-
-        return (Bonsai) bonsaiDao.save(bonsai);
+    public BonsaiEntity create(@RequestBody BonsaiEntity bonsai){
+        return bonsaiDao.save(bonsai);
     }
 //
 
@@ -58,11 +56,14 @@ public class BonsaiRepository{
 
 
 
-//a modifier
-    public Bonsai patch(Bonsai bonsai, UUID id) {
+//a modifier le meme que pour le create
 
-        return bonsai;
+    public Bonsai patch(Bonsai bonsai, UUID id){
+        return bonsaiDao.save(bonsai);
+    }
+
+
     }
 //
 
-}
+
