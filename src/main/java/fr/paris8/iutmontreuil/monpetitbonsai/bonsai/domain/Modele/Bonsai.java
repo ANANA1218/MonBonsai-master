@@ -17,6 +17,7 @@ public class Bonsai {
     private List<Pruning> prunings;
 
 
+
     public Bonsai() {}
 
     public UUID getId() {

@@ -16,6 +16,8 @@ public class WateringDTO {
         return id;
     }
 
+
+
     public void setId(UUID id) {
         this.id = id;
     }

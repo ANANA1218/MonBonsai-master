@@ -11,5 +11,4 @@ import java.util.UUID;
 @Repository
 public interface  BonsaiDao extends JpaRepository<BonsaiEntity, UUID> {
 
-
 }

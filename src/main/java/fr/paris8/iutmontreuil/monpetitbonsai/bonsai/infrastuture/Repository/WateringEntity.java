@@ -25,6 +25,7 @@ public class WateringEntity {
         return id;
     }
 
+
     public void setId(UUID id) {
         this.id = id;
     }

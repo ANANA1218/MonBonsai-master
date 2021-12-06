@@ -20,6 +20,7 @@ public class BonsaiDTO {
     public BonsaiDTO() {
     }
 
+
     public UUID getId() {
         return id;
     }

@@ -8,6 +8,7 @@ public class Watering {
     private Date watering_date;
     private Bonsai bonsai;
 
+
     public Watering() {
     }
 

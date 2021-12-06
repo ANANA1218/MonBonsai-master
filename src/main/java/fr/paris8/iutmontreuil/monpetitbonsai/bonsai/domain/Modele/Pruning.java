@@ -8,6 +8,8 @@ public class Pruning {
     private Date pruning_date;
     private Bonsai bonsai;
 
+
+
     public Pruning() {
     }
 

@@ -21,6 +21,7 @@ public class RepottingEntity {
     public RepottingEntity() {
     }
 
+
     public UUID getId() {
         return id;
     }

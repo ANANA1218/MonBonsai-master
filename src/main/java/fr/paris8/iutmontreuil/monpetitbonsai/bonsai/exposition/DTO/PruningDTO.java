@@ -3,6 +3,7 @@ package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO;
 import java.util.Date;
 import java.util.UUID;
 
+
 public class PruningDTO {
 
     private UUID id;
