@@ -5,56 +5,49 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
-@Entity(name= "Bonsai")
-@Table(name ="bonsai")
+@Entity(name = "bonsai")
+@Table(name = "bonsai")
 public class BonsaiEntity {
-
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name="uuid", strategy = "org.hibernate.id.UUIDGenerator")
-
-    @Column(name="id")
-    private String id;
-
-    @Column(name="name")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
+    @Column(name = "name")
     private String name;
-
-
     @Column(name = "species")
     private String species;
-
     @Column(name = "acquisition_date")
     private Date acquisition_date;
-
     @Column(name = "acquisition_age")
     private int acquisition_age;
-
     @Column(name = "status")
     private String status;
-
-
+    @OneToMany(targetEntity = WateringEntity.class, mappedBy = "bonsai")
+    private List<WateringEntity> waterings;
+    @OneToMany(targetEntity = RepottingEntity.class, mappedBy = "bonsai")
+    private List<RepottingEntity> repottings;
+    @OneToMany(targetEntity = PruningEntity.class, mappedBy = "bonsai")
+    private List<PruningEntity> prunings;
 
     public BonsaiEntity() {
-
     }
 
-    public String getId() {
-
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
     public String getName() {
-
         return name;
     }
 
     public void setName(String name) {
-
         this.name = name;
     }
 
@@ -62,31 +55,55 @@ public class BonsaiEntity {
         return species;
     }
 
-    public Date getAcquisition_date() {
-        return acquisition_date;
-    }
-
-    public int getAcquisition_age() {
-        return acquisition_age;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
     public void setSpecies(String species) {
         this.species = species;
+    }
+
+    public Date getAcquisition_date() {
+        return acquisition_date;
     }
 
     public void setAcquisition_date(Date acquisition_date) {
         this.acquisition_date = acquisition_date;
     }
 
+    public int getAcquisition_age() {
+        return acquisition_age;
+    }
+
     public void setAcquisition_age(int acquisition_age) {
         this.acquisition_age = acquisition_age;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<WateringEntity> getWaterings() {
+        return waterings;
+    }
+
+    public void setWaterings(List<WateringEntity> waterings) {
+        this.waterings = waterings;
+    }
+
+    public List<RepottingEntity> getRepottings() {
+        return repottings;
+    }
+
+    public void setRepottings(List<RepottingEntity> repottings) {
+        this.repottings = repottings;
+    }
+
+    public List<PruningEntity> getPrunings() {
+        return prunings;
+    }
+
+    public void setPrunings(List<PruningEntity> prunings) {
+        this.prunings = prunings;
     }
 }

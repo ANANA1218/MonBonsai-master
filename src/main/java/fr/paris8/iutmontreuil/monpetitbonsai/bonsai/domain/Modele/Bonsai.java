@@ -1,45 +1,29 @@
 package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele;
 
 
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiEntity;
-
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-public class Bonsai extends BonsaiEntity {
-
-    public String id;
-    public String name;
-    public String species;
-    public Date acquisition_Date;
-    public int acquisition_Age;
-    public Date last_watering;
-    public Date last_repotting;
-    public Date last_pruning;
-    public String status;
-
-    public Bonsai(String id, String name, String species, Date acsuistion_Date, int acquisition_Age, Date last_watering, Date last_repotting, Date last_pruning, String status) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
-        this.acquisition_Date = acsuistion_Date;
-        this.acquisition_Age = acquisition_Age;
-        this.last_watering = last_watering;
-        this.last_repotting = last_repotting;
-        this.last_pruning = last_pruning;
-        this.status = status;
-    }
-
-    public Bonsai() {
-
-    }
+public class Bonsai {
+    private UUID id;
+    private String name;
+    private String species;
+    private Date acquisition_date;
+    private int acquisition_age;
+    private String status;
+    private List<Watering> waterings;
+    private List<Repotting> repottings;
+    private List<Pruning> prunings;
 
 
-    public String getId() {
+    public Bonsai() {}
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -59,44 +43,20 @@ public class Bonsai extends BonsaiEntity {
         this.species = species;
     }
 
-    public Date getAcquisition_Date() {
-        return acquisition_Date;
+    public Date getAcquisition_date() {
+        return acquisition_date;
     }
 
-    public void setAcquisition_Date(Date acquisition_Date) {
-        this.acquisition_Date = acquisition_Date;
+    public void setAcquisition_date(Date acquisition_date) {
+        this.acquisition_date = acquisition_date;
     }
 
-    public int getAcquisition_Age() {
-        return acquisition_Age;
+    public int getAcquisition_age() {
+        return acquisition_age;
     }
 
-    public void setAcquisition_Age(int acquisition_Age) {
-        this.acquisition_Age = acquisition_Age;
-    }
-
-    public Date getLast_watering() {
-        return last_watering;
-    }
-
-    public void setLast_watering(Date last_watering) {
-        this.last_watering = last_watering;
-    }
-
-    public Date getLast_repotting() {
-        return last_repotting;
-    }
-
-    public void setLast_repotting(Date last_repotting) {
-        this.last_repotting = last_repotting;
-    }
-
-    public Date getLast_pruning() {
-        return last_pruning;
-    }
-
-    public void setLast_pruning(Date last_pruning) {
-        this.last_pruning = last_pruning;
+    public void setAcquisition_age(int acquisition_age) {
+        this.acquisition_age = acquisition_age;
     }
 
     public String getStatus() {
@@ -105,6 +65,30 @@ public class Bonsai extends BonsaiEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Watering> getWaterings() {
+        return waterings;
+    }
+
+    public void setWaterings(List<Watering> waterings) {
+        this.waterings = waterings;
+    }
+
+    public List<Repotting> getRepottings() {
+        return repottings;
+    }
+
+    public void setRepottings(List<Repotting> repottings) {
+        this.repottings = repottings;
+    }
+
+    public List<Pruning> getPrunings() {
+        return prunings;
+    }
+
+    public void setPrunings(List<Pruning> prunings) {
+        this.prunings = prunings;
     }
 
 
