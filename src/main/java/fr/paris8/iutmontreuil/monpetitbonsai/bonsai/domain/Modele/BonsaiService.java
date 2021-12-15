@@ -1,6 +1,5 @@
 package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele;
 
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiEntity;
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +24,18 @@ public class BonsaiService {
     }
 
 
-    public BonsaiEntity create(BonsaiEntity bonsai) {
+    public Bonsai create(Bonsai bonsai) {
         return repository.create(bonsai);
     }
 
     public Bonsai updat(Bonsai bonsai, UUID id) {
-        return repository.updat(bonsai, id);
+        return repository.update(bonsai, id);
     }
-
 
     public Bonsai updatStatus(Bonsai bonsai, UUID id) {
-        return repository.updatStatus(bonsai, id);
+        return repository.update(bonsai, id);
     }
+
 
     public void deleteById(UUID id) {
         repository.deleteById(id);

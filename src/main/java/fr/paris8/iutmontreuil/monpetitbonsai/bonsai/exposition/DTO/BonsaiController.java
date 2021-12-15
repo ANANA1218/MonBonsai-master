@@ -47,12 +47,16 @@ public class BonsaiController {
 
 
 
-// modifier
+// a voir
     @PostMapping
+    public ResponseEntity<BonsaiDTO> create(@RequestBody BonsaiDTO bonsaiDTO){
 
-        public BonsaiEntity create(@RequestBody BonsaiEntity bonsai){
-            return bonsaiService.create(bonsai);
-        }
+        Bonsai bonsai = bonsaiService.create(BonsaiMapper.DtoToBonsai(bonsaiDTO));
+        bonsaiDTO = BonsaiMapper.bonsaiToDto(bonsai) ;
+        return ResponseEntity.ok(bonsaiDTO);
+
+
+    }
 
     //
 
