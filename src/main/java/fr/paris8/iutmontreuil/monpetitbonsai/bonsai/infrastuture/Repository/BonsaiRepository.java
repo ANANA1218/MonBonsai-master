@@ -1,11 +1,13 @@
 package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository;
 
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Bonsai;
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Pruning;
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Repotting;
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Watering;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.*;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.DAO.BonsaiDao;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.DAO.PruningDao;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.DAO.RepottingDao;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.DAO.WateringDao;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.Entity.BonsaiEntity;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,11 +18,10 @@ import java.util.stream.Collectors;
 @Component
 public class BonsaiRepository{
 
-    private BonsaiDao bonsaiDao;
+    private  BonsaiDao bonsaiDao;
     private WateringDao wateringDao;
     private RepottingDao repottingDao;
     private PruningDao pruningDao;
-
 
     public BonsaiRepository(BonsaiDao bonsaiDao, WateringDao wateringDao, RepottingDao repottingDao, PruningDao pruningDao) {
         this.bonsaiDao = bonsaiDao;
@@ -28,7 +29,6 @@ public class BonsaiRepository{
         this.repottingDao = repottingDao;
         this.pruningDao = pruningDao;
     }
-
 
     //ok
     public Optional<Bonsai> findById(UUID uuid) {
@@ -47,13 +47,8 @@ public class BonsaiRepository{
 
 //
 
-
-
-
-
-
     //a voir si c bon
-    public Bonsai create( Bonsai bonsai){
+    public Bonsai create(Bonsai bonsai){
 
         BonsaiEntity bonsaiEntity = BonsaiMapper.BonsaiToEntity(bonsai);
         BonsaiEntity save = bonsaiDao.save(bonsaiEntity);
@@ -63,28 +58,27 @@ public class BonsaiRepository{
 //
 
     // a modifier
-    public Bonsai update(Bonsai bonsai, UUID id){
+    public Bonsai update(Bonsai bonsai){
         BonsaiEntity bonsaiEntity = BonsaiMapper.BonsaiToEntity(bonsai);
-        BonsaiEntity save = bonsaiDao.save(bonsaiEntity);
+        BonsaiEntity update = bonsaiDao.save(bonsaiEntity);
 
-        return BonsaiMapper.EntityToBonsai(save);
+        return BonsaiMapper.EntityToBonsai(update);
     }
 
 //
 
-// a modifier
-public Bonsai updatStatus(Bonsai bonsai, UUID id){
-    BonsaiEntity bonsaiEntity = BonsaiMapper.BonsaiToEntity(bonsai);
-    BonsaiEntity save = bonsaiDao.save(bonsaiEntity);
+    // a modifier
+    public Bonsai statusUpdate(Bonsai bonsai, UUID id){
+        BonsaiEntity bonsaiEntity = BonsaiMapper.BonsaiToEntity(bonsai);
+        BonsaiEntity statusUpdate = bonsaiDao.save(bonsaiEntity);
 
-    return BonsaiMapper.EntityToBonsai(save);
-}
+        return BonsaiMapper.EntityToBonsai(statusUpdate);
+    }
 
 //
-
 //ok
 
-     public void deleteById(UUID id) {
+    public void deleteById(UUID id) {
         bonsaiDao.deleteById(id);
     }
 //
@@ -93,18 +87,23 @@ public Bonsai updatStatus(Bonsai bonsai, UUID id){
 
 
 
+
     //ok
     public List<Watering> getWatering(UUID id) {
         return wateringDao.findAll().stream()
+                .filter(watering -> watering.getBonsai().getId().equals(id))
                 .map(BonsaiMapper::EntityToWatering)
                 .sorted(Comparator.comparing(Watering::getWatering_date).reversed())
                 .collect(Collectors.toList());
     }
 //
 
-//ok
+
+
+    //ok
     public List<Repotting> getRepotting(UUID id) {
         return repottingDao.findAll().stream()
+                .filter(repotting -> repotting.getBonsai().getId().equals(id))
                 .map(BonsaiMapper::EntityToRepotting)
                 .sorted(Comparator.comparing(Repotting::getRepotting_date).reversed())
                 .collect(Collectors.toList());
@@ -114,17 +113,15 @@ public Bonsai updatStatus(Bonsai bonsai, UUID id){
     //ok
     public List<Pruning> getPruning(UUID id) {
         return pruningDao.findAll().stream()
+                .filter(pruning -> pruning.getBonsai().getId().equals(id))
                 .map(BonsaiMapper::EntityToPruning)
                 .sorted(Comparator.comparing(Pruning::getPruning_date).reversed())
                 .collect(Collectors.toList());
     }
 
-//
 
 
 
 
-    }
 
-
-
+}

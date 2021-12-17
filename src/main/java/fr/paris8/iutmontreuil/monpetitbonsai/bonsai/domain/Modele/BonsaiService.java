@@ -1,15 +1,16 @@
 package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele;
 
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiRepository;
+
 import org.springframework.stereotype.Service;
 
-import javax.persistence.OneToMany;
+
 import java.util.*;
 
 @Service
 public class BonsaiService {
 
-    @OneToMany
+
     private BonsaiRepository repository;
 
     public BonsaiService(BonsaiRepository repository){
@@ -24,16 +25,35 @@ public class BonsaiService {
     }
 
 
+
     public Bonsai create(Bonsai bonsai) {
         return repository.create(bonsai);
     }
 
-    public Bonsai updat(Bonsai bonsai, UUID id) {
-        return repository.update(bonsai, id);
+
+    public Optional<Bonsai> update(UUID id, Bonsai bonsai) {
+
+        Optional<Bonsai> bonsaiUpdate = repository.findById(id);
+
+        if (bonsaiUpdate.isPresent()) {
+            bonsaiUpdate.get().setName(bonsai.getName());
+            bonsaiUpdate.get().setSpecies(bonsai.getSpecies());
+            bonsaiUpdate.get().setAcquisition_date(bonsai.getAcquisition_date());
+            bonsaiUpdate.get().setAcquisition_age(bonsai.getAcquisition_age());
+            return Optional.of(repository.update(bonsaiUpdate.get()));
+        }
+        return bonsaiUpdate;
     }
 
-    public Bonsai updatStatus(Bonsai bonsai, UUID id) {
-        return repository.update(bonsai, id);
+    public Optional<Bonsai> statusUpdate(UUID id, String status) {
+
+        Optional<Bonsai> bonsaiPut = repository.findById(id);
+
+        if (bonsaiPut.isPresent()) {
+            bonsaiPut.get().setStatus(status);
+            return Optional.of(repository.statusUpdate(bonsaiPut.get(), id));
+        }
+        return bonsaiPut;
     }
 
 
@@ -44,10 +64,17 @@ public class BonsaiService {
     public List<Watering> getWatering(UUID uuid) {
         return repository.getWatering(uuid);
     }
+
+
+
+
+
     public List<Repotting> getRepotting(UUID uuid) {
         return repository.getRepotting(uuid);
     }
     public List<Pruning> getPruning(UUID uuid) {
         return repository.getPruning(uuid);
     }
+
+
 }

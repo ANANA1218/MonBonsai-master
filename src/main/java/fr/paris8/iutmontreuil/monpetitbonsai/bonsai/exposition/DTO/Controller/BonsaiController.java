@@ -1,9 +1,15 @@
-package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO;
+package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO.Controller;
+
 
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.Bonsai;
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele.BonsaiService;
-import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiEntity;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO.BonsaiDTO;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO.PruningDTO;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO.RepottingDTO;
+import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.exposition.DTO.WateringDTO;
 import fr.paris8.iutmontreuil.monpetitbonsai.bonsai.infrastuture.Repository.BonsaiMapper;
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/bonsais")
+@RequestMapping("/bonsai")
 public class BonsaiController {
 
 
@@ -34,6 +40,7 @@ public class BonsaiController {
 //
 
 
+
     // OK
     @GetMapping("/{uuid}")
     public ResponseEntity<BonsaiDTO> findById(@PathVariable("uuid") UUID uuid){
@@ -47,35 +54,32 @@ public class BonsaiController {
 
 
 
-// a voir
+    // modifier
     @PostMapping
-    public ResponseEntity<BonsaiDTO> create(@RequestBody BonsaiDTO bonsaiDTO){
-
+    public ResponseEntity<BonsaiDTO> create(@RequestBody BonsaiDTO bonsaiDTO) {
         Bonsai bonsai = bonsaiService.create(BonsaiMapper.DtoToBonsai(bonsaiDTO));
-        bonsaiDTO = BonsaiMapper.bonsaiToDto(bonsai) ;
+        bonsaiDTO = BonsaiMapper.bonsaiToDto(bonsai);
         return ResponseEntity.ok(bonsaiDTO);
 
-
     }
 
-    //
 
-
-    // modifier
     @PatchMapping("/{uuid}")
-    public BonsaiService updat(@RequestBody BonsaiEntity bonsai, @PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<BonsaiDTO> update(@PathVariable UUID uuid, @RequestBody BonsaiDTO bonsaiDTO) {
 
-        return bonsaiService;
+        return bonsaiService.update(uuid, BonsaiMapper.DtoToBonsai(bonsaiDTO))
+                .map(bonsai -> ResponseEntity.ok(BonsaiMapper.bonsaiToDto(bonsai)))
+                .orElse(ResponseEntity.notFound().build());
     }
-    //
 
-    // modifier
-    @PutMapping("/{uuid}")
-    public BonsaiService updatStatus(@RequestBody BonsaiEntity bonsai, @PathVariable("uuid") UUID uuid) {
+    @PutMapping("/{uuid}/status")
+    public  ResponseEntity<BonsaiDTO> statusUpdate(@PathVariable UUID uuid, @RequestBody String status){
 
-        return bonsaiService;
+        return bonsaiService.statusUpdate(uuid, status)
+                .map(bonsai -> ResponseEntity.ok(BonsaiMapper.bonsaiToDto(bonsai)))
+                .orElse(ResponseEntity.notFound().build());
     }
-    //
+
 
 
     // OK
@@ -91,6 +95,7 @@ public class BonsaiController {
     public List<WateringDTO> getWatering(@PathVariable UUID uuid) {
         return bonsaiService.getWatering(uuid)
                 .stream()
+                .filter(watering -> watering.getBonsai().getId().equals(uuid))
                 .map(BonsaiMapper::wateringToDto)
                 .collect(Collectors.toList());
     }
@@ -101,6 +106,7 @@ public class BonsaiController {
     public List<RepottingDTO> getRepotting(@PathVariable UUID uuid) {
         return bonsaiService.getRepotting(uuid)
                 .stream()
+                .filter(repotting-> repotting.getBonsai().getId().equals(uuid))
                 .map(BonsaiMapper::RepottingToDto)
                 .collect(Collectors.toList());
     }
@@ -112,13 +118,11 @@ public class BonsaiController {
     public List<PruningDTO> getPruning(@PathVariable UUID uuid) {
         return bonsaiService.getPruning(uuid)
                 .stream()
+                .filter(pruning -> pruning.getBonsai().getId().equals(uuid))
                 .map(BonsaiMapper::PruningtoDto)
                 .collect(Collectors.toList());
     }
-   //
+    //
 
 
 }
-
-
-
