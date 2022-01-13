@@ -59,12 +59,12 @@ public class OwnerRepository {
     }
 //
 
-    public List<Bonsai> getBonsai(UUID id) {
-        return bonsaiDao.findAll()
-                .stream()
-                .filter(bonsai -> bonsai.getOwnerEntity().getId().equals(id))
-                .map(OwnerMapper::EntityToBonsai)
-                .collect(Collectors.toList());
-    }
+  //  public List<Bonsai> getBonsai(UUID id) {
+    //    return bonsaiDao.findAll()
+     //          .stream()
+           //     .filter(bonsai -> bonsai.getOwnerEntity().getId().equals(id))
+              //  .map(OwnerMapper::EntityToBonsai)
+              //  .collect(Collectors.toList());
+  //  }
 
 }
