@@ -1,22 +1,34 @@
-package fr.paris8.iutmontreuil.monpetitbonsai.bonsai.domain.Modele;
+package fr.paris8.iutmontreuil.monpetitbonsai.owner.Entity;
+import fr.paris8.iutmontreuil.monpetitbonsai.owner.OwnerEntity.OwnerEntity;
+import org.hibernate.annotations.GenericGenerator;
 
-
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Bonsai {
+@Entity(name = "bonsai")
+@Table(name = "bonsai")
+public class BonsaiEntity {
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "species")
     private String species;
+    @Column(name = "acquisition_date")
     private Date acquisition_date;
+    @Column(name = "acquisition_age")
     private int acquisition_age;
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private fr.paris8.iutmontreuil.monpetitbonsai.owner.OwnerEntity.OwnerEntity ownerEntity;
 
 
-
-
-    public Bonsai() {}
+    public BonsaiEntity() {
+    }
 
     public UUID getId() {
         return id;
@@ -58,15 +70,11 @@ public class Bonsai {
         this.acquisition_age = acquisition_age;
     }
 
-    public String getStatus() {
-        return status;
+    public OwnerEntity getOwnerEntity() {
+        return ownerEntity;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOwnerEntity(OwnerEntity ownerEntity) {
+        this.ownerEntity = ownerEntity;
     }
-
-
-
-
 }
